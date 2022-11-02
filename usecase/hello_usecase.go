@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/atjhoendz/ferstream-impl/event"
 	"github.com/kumparan/ferstream"
 	"github.com/kumparan/go-utils"
 	"github.com/nats-io/nats.go"
 	log "github.com/sirupsen/logrus"
-	"gitlab.com/achun.armando/ferstream-impl/event"
 )
 
 type HelloUsecase struct {

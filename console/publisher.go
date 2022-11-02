@@ -6,13 +6,13 @@ import (
 	"os/signal"
 	"time"
 
+	"github.com/atjhoendz/ferstream-impl/config"
+	"github.com/atjhoendz/ferstream-impl/usecase"
 	"github.com/jaswdr/faker"
 	"github.com/kumparan/ferstream"
 	"github.com/nats-io/nats.go"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
-	"gitlab.com/achun.armando/ferstream-impl/config"
-	"gitlab.com/achun.armando/ferstream-impl/usecase"
 )
 
 var publisherCmd = &cobra.Command{
@@ -85,40 +85,6 @@ func publisher(cmd *cobra.Command, _ []string) {
 	<-done
 	fmt.Scanln()
 }
-
-// func initNATSJSClients(NATSJetStreamHost string, clients []ferstream.JetStreamRegistrar) (js ferstream.JetStream, err error) {
-// 	natsConf := []nats.Option{
-// 		nats.UseOldRequestStyle(),
-// 		nats.RetryOnFailedConnect(config.DefaultNATSJSRetryOnFailedConnect),
-// 		nats.MaxReconnects(config.DefaultNATSJSMaxReconnect),
-// 		nats.ReconnectWait(config.DefaultNATSJSReconnectWait),
-// 		nats.ErrorHandler(func(_ *nats.Conn, _ *nats.Subscription, err error) {
-// 			log.Errorf("NATS got error! Reason: %q\n", err)
-// 		}),
-// 		nats.DisconnectErrHandler(func(_ *nats.Conn, err error) {
-// 			log.Errorf("NATS got disconnected! Reason: %q\n", err)
-// 		}),
-// 		// nats.ReconnectHandler(ferstream.ReconnectHandler(clients)),
-// 		nats.ReconnectHandler(func(c *nats.Conn) {
-// 			log.Info("RECONNECT NICH")
-// 		}),
-// 		nats.ClosedHandler(func(nc *nats.Conn) {
-// 			log.Errorf("NATS connection closed. Reason: %q\n", nc.LastError())
-// 		}),
-// 	}
-// 	js, err = ferstream.NewNATSConnection(NATSJetStreamHost, natsConf...)
-// 	if err != nil {
-// 		log.Errorf("Failed to connect nats server. Reason: %q\n", err)
-// 		return
-// 	}
-
-// 	err = ferstream.RegisterJetStreamClient(js, clients)
-// 	if err != nil {
-// 		log.Error(err)
-// 	}
-
-// 	return
-// }
 
 func publishOneMessage(helloUsecase *usecase.HelloUsecase) error {
 	err := helloUsecase.SayHello("brader")

@@ -1,4 +1,4 @@
-module gitlab.com/achun.armando/ferstream-impl
+module github.com/atjhoendz/ferstream-impl
 
 go 1.18
 
