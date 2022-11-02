@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/jaswdr/faker v1.15.0
-	github.com/kumparan/ferstream v1.7.0
+	github.com/kumparan/ferstream v1.8.0
 	github.com/kumparan/go-utils v1.25.1
 	github.com/nats-io/nats.go v1.16.0
 	github.com/sirupsen/logrus v1.8.1
@@ -17,7 +17,6 @@ require (
 	github.com/getsentry/sentry-go v0.11.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/goodsign/monday v1.0.0 // indirect
-	github.com/google/martian v2.1.0+incompatible // indirect
 	github.com/gorilla/css v1.0.0 // indirect
 	github.com/graph-gophers/graphql-go v1.4.0 // indirect
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
@@ -40,4 +39,5 @@ require (
 	google.golang.org/protobuf v1.27.1 // indirect
 )
 
-replace github.com/kumparan/ferstream v1.7.0 => ../ferstream
+// replace to local branch
+// replace github.com/kumparan/ferstream v1.8.0 => ../ferstream
