@@ -1,7 +1,6 @@
 package console
 
 import (
-	"fmt"
 	"os"
 	"os/signal"
 	"time"
@@ -46,12 +45,15 @@ func publisher(cmd *cobra.Command, _ []string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer ferstream.SafeClose(js)
 
 	// Wait for a SIGINT (perhaps triggered by user with CTRL-C)
 	signalChan := make(chan os.Signal, 1)
 	done := make(chan bool)
 	signal.Notify(signalChan, os.Interrupt)
+
+	js.GetNATSConnection().SetClosedHandler(func(c *nats.Conn) {
+		done <- true
+	})
 
 	go func(ferstream.JetStream) {
 		for range signalChan {
@@ -60,9 +62,7 @@ func publisher(cmd *cobra.Command, _ []string) {
 
 			// Drain the connection, which will close it when done.
 			ferstream.SafeClose(js)
-
 			log.Println("exiting...")
-			done <- true
 			return
 		}
 	}(js)
@@ -79,19 +79,21 @@ func publisher(cmd *cobra.Command, _ []string) {
 		go publishMultipleMessage(helloUsecase, done, ticker)
 		defer ticker.Stop()
 	default:
-		log.Error("argument invalid")
+		log.Errorf("argument %s invalid", publishType)
 	}
 
 	<-done
-	fmt.Scanln()
 }
 
 func publishOneMessage(helloUsecase *usecase.HelloUsecase) error {
-	err := helloUsecase.SayHello("brader")
+	name := faker.New().Person().Name()
+	err := helloUsecase.SayHello(name)
 	if err != nil {
 		log.Error(err)
 		return err
 	}
+
+	log.Infof("sent hello message to %s", name)
 
 	return nil
 }

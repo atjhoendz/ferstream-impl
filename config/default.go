@@ -3,6 +3,8 @@ package config
 import "time"
 
 const (
+	NATSDurableID                       = "hello-sub"
+	ContextCaller                       = "hello-caller"
 	DefaultNATSJSHost                   = "nats://localhost:4222"
 	DefaultNATSJSRetryOnFailedConnect   = true
 	DefaultNATSJSMaxReconnect           = -1
