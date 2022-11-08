@@ -11,19 +11,24 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-type HelloUsecase struct {
+type Hello struct {
 	js ferstream.JetStream
 }
 
-func NewHelloUsecase() *HelloUsecase {
-	return &HelloUsecase{}
+type HelloUsecase interface {
+	RegisterNATSJetStream(js ferstream.JetStream)
+	SayHello(msg string) error
 }
 
-func (h *HelloUsecase) RegisterNATSJetStream(js ferstream.JetStream) {
+func NewHelloUsecase() HelloUsecase {
+	return &Hello{}
+}
+
+func (h *Hello) RegisterNATSJetStream(js ferstream.JetStream) {
 	h.js = js
 }
 
-func (h *HelloUsecase) InitStream() error {
+func (h *Hello) InitStream() error {
 	_, err := h.js.AddStream(&nats.StreamConfig{
 		Name:     event.HelloStreamName,
 		Subjects: []string{event.HelloStreamSubjectAll},
@@ -38,7 +43,7 @@ func (h *HelloUsecase) InitStream() error {
 	return nil
 }
 
-func (h *HelloUsecase) SayHello(msg string) error {
+func (h *Hello) SayHello(msg string) error {
 	eventMsg := ferstream.NewNatsEventMessage().
 		WithEvent(
 			&ferstream.NatsEvent{

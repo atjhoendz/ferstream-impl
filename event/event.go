@@ -1,7 +1,7 @@
 package event
 
 const (
-	HelloStreamName          = "HELLO"
-	HelloStreamSubjectAll    = "HELLO.>"
-	HelloStreamSubjectCreate = "HELLO.create"
+	HelloStreamName          = "HELLO2"
+	HelloStreamSubjectAll    = "HELLO2.>"
+	HelloStreamSubjectCreate = "HELLO2.create"
 )

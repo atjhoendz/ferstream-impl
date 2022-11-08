@@ -85,7 +85,7 @@ func publisher(cmd *cobra.Command, _ []string) {
 	<-done
 }
 
-func publishOneMessage(helloUsecase *usecase.HelloUsecase) error {
+func publishOneMessage(helloUsecase usecase.HelloUsecase) error {
 	name := faker.New().Person().Name()
 	err := helloUsecase.SayHello(name)
 	if err != nil {
@@ -98,7 +98,7 @@ func publishOneMessage(helloUsecase *usecase.HelloUsecase) error {
 	return nil
 }
 
-func publishMultipleMessage(helloUsecase *usecase.HelloUsecase, done <-chan bool, ticker *time.Ticker) {
+func publishMultipleMessage(helloUsecase usecase.HelloUsecase, done <-chan bool, ticker *time.Ticker) {
 	for {
 		select {
 		case <-done:
